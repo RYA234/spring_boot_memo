@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>1.コントローラーから関数に渡す</title>
+</head>
+<body>
+<form method="post" action="/shop/shop_cartin" class="form-control" th:object="${productListForm}">
+  1.コントローラーから関数に渡す </br></br>
+  コントローラーの説明</br>
+  コントローラから変数 int Countを宣言して </br>
+  model().attribute("Count",Count)を使ってhtml側に渡す</br>
+  NGとOKの場合ともに 同じ処理になる</br></br>
+
+  html側の説明
+
+  </br>
+  <button  type="submit" th:name="OK">
+  OKの場合に遷移する
+</button>
+
+<button  type="submit" th:name="NG">
+  NGの場合に遷移する
+</button>
+
+  </form>
+</body>
+</html>
