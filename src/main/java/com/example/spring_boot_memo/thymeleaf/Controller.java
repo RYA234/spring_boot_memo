@@ -33,7 +33,7 @@ public class Controller {
     }
 
     @RequestMapping(value = "thymeleaf/3_menu", method = RequestMethod.GET)
-    public String thymeleaf_3_menuController()
+    public String thymeleaf_3_menuController(Model model,@ModelAttribute ModelForm modelForm)
     {
         return "thymeleaf/3_menu";
     }
@@ -89,5 +89,17 @@ public class Controller {
         return "thymeleaf/2_menu_ng";
     }
 
+    @RequestMapping(value = "thymeleaf/3_menu", params = "OK", method = RequestMethod.POST)
+    public String thymeleaf_3_menuOkController(Model model,ModelForm modelForm)
+    {
+
+        return "thymeleaf/3_menu_ok";
+    }
+
+    @RequestMapping(value = "thymeleaf/3_menu", params = "NG", method = RequestMethod.POST)
+    public String thymeleaf_3_menuNgController(Model model,ModelForm modelForm)
+    {
+        return "thymeleaf/3_menu_ng";
+    }
 
 }

@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>3.html側からコントローラーに変数を渡す</title>
-    <!-- 個別CSS読込 -->
+    <title>3.htmlからControllerから関数に渡す</title>
 </head>
 <body>
+<form method="post" action="/thymeleaf/3_menu"th:object="${modelForm}" >
+    <input type ="text" th:name="*{count}"> </br>
+<!--    <input type ="text" th:field="{name}">-->
 
+    </br>
+    <button  type="submit" name="OK">
+        OKの場合に遷移する
+    </button>
+    &nbsp&nbsp&nbsp
+    <button  type="submit" name="NG">
+        NGの場合に遷移する
+    </button>
+
+</form>
 </body>
 </html>
