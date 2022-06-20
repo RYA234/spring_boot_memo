@@ -6,7 +6,7 @@
   <title>1.コントローラーから関数に渡す</title>
 </head>
 <body>
-<form method="post" action="/shop/shop_cartin" class="form-control" th:object="${productListForm}">
+<form method="post" action="/thymeleaf/1_menu"  >
   1.コントローラーから関数に渡す </br></br>
   コントローラーの説明</br>
   コントローラから変数 int Countを宣言して </br>
@@ -16,11 +16,11 @@
   html側の説明
 
   </br>
-  <button  type="submit" th:name="OK">
+  <button  type="submit" name="OK">
   OKの場合に遷移する
 </button>
-
-<button  type="submit" th:name="NG">
+  &nbsp&nbsp&nbsp
+<button  type="submit" name="NG">
   NGの場合に遷移する
 </button>
 
