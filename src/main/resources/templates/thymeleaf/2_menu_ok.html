@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>2.コントローラーからhtml側にクラスを渡すOK</title>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>2.コントローラーからhtml側にクラスを渡す_OK</title>
 </head>
 <body>
+コントロールからの値の取得に成功しました
+<div th:object ="${modelForm}">
+    countは<div th:text="*{count}" th:name="*{count}"></div>
+    です。
+    </bn></br>
+    nameは<div  th:text="*{name}" th:name="*{name}"></div>
+    です。
+</div>
+
 
 </body>
 </html>
