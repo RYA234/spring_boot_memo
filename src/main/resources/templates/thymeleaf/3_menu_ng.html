@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>3.html側からコントローラーに変数を渡すNG</title>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>3.コントローラーからhtml側にクラスを渡す_NG</title>
 </head>
 <body>
+コントロールからの値の取得に失敗しました
+<div th:object ="${modelForm}">
+    countは<div th:text="${count}" th:name="${count}"></div>
+    nameは<div th:text="${name}" th:name="${name}"></div>
+    です。
+ </br>
+    です。
+</div>
+
 
 </body>
 </html>

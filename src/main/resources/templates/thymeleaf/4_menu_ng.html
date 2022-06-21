@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>4.繰り返しについてNG</title>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>4.繰り返しについて_NG</title>
 </head>
 <body>
-
+コントロールからの値の取得に失敗しました。
+<table>
+    <thead>
+    <tr>
+        <th>count </th>
+        <th>名前 </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${list}">
+        <td th:text ="{item.count}"></td>
+        <td th:text ="{item.name}"></td>
+    </tr>>
+    </tbody>>
+</table>
 </body>
 </html>

@@ -7,8 +7,8 @@
 </head>
 <body>
 <form method="post" action="/thymeleaf/3_menu"th:object="${modelForm}" >
-    <input type ="text" th:name="*{count}"> </br>
-<!--    <input type ="text" th:field="{name}">-->
+    <input type ="text" th:field="*{count}"> </br>
+    <input type ="text" th:field="*{name}">
 
     </br>
     <button  type="submit" name="OK">
