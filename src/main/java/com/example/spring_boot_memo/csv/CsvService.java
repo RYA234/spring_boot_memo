@@ -25,18 +25,17 @@ public class CsvService {
      * @return csv(String)
      * @throws JsonProcessingException
      */
-    public String getCsvText() throws JsonProcessingException {
+
+
+    public String getCsvText(List<CsvData> csvDataList) throws JsonProcessingException {
         CsvMapper mapper = new CsvMapper();
         //文字列にダブルクオートをつける
         mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
         //ヘッダをつける
         CsvSchema schema = mapper.schemaFor(CsvData.class).withHeader();
         //本来はDBからデータを取得する。
-        List<CsvData> csvDatas = new ArrayList<CsvData>();
-        csvDatas.add(new CsvData(1, "柿", 100));
-        csvDatas.add(new CsvData(2, "米", 200));
-        csvDatas.add(new CsvData(3, "エビ", 300));
-        return mapper.writer(schema).writeValueAsString(csvDatas);
+        return mapper.writer(schema).writeValueAsString(csvDataList);
+
     }
 
 

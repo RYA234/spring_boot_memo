@@ -4,7 +4,7 @@ package com.example.spring_boot_memo.csv;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
-
+// データモデルです。
 
 @Data
 @JsonPropertyOrder({"CODE", "名前","値段"})

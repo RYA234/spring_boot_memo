@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -25,10 +27,13 @@ public class Controller {
     }
     @RequestMapping(value = "download", method = RequestMethod.POST)
     public ResponseEntity<byte[]> download() throws IOException {
-
+        List<CsvData> csvDataList = new ArrayList<>();
+        CsvData csvData = new CsvData(1,"寿司",120);
+        csvDataList.add(csvData);
         HttpHeaders headers = new HttpHeaders();
         downloadHelper.addContentDisposition(headers, "日本語ファイル名.csv");
-        return new ResponseEntity<>(csvService.getCsvText().getBytes("MS932"), headers, HttpStatus.OK);
+        System.out.print(csvService.getCsvText(csvDataList));
+        return new ResponseEntity<>(csvService.getCsvText(csvDataList).getBytes("MS932"), headers, HttpStatus.OK);
     }
 
 }
