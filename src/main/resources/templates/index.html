@@ -5,8 +5,10 @@
     <title>インデックス画面</title>
 </head>
 <body>
-thymeleaf
-
+<form id="csvform" method="post" action="/download">
+    <input type="hidden" name="filename"/>
+    <button type="submit" name="OK">CSVを取得</button>
+</form>
 
 </body>
 </html>
