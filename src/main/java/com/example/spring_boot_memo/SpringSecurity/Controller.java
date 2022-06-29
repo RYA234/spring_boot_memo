@@ -1,6 +1,7 @@
-package com.example.spring_boot_memo.thymeleaf;
+package com.example.spring_boot_memo.SpringSecurity;
 
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -13,4 +14,14 @@ public class Controller {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login/login";
+    }
+
+    @GetMapping("/check/OK")
+    public String getCheckOk()
+    {
+        return "check/OK";
+    }
 }
