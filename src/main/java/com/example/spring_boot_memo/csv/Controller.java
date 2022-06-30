@@ -1,6 +1,7 @@
 package com.example.spring_boot_memo.csv;
 
 
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,14 @@ import java.util.List;
 @org.springframework.stereotype.Controller
 public class Controller {
 
+
+
     @Autowired
     CsvService csvService;
 
     @Autowired
     DownloadHelper downloadHelper;
+
     @RequestMapping(value = "index",params = "OK",method = RequestMethod.GET)
     public String indexController()
     {
@@ -27,13 +31,16 @@ public class Controller {
     }
     @RequestMapping(value = "download", method = RequestMethod.POST)
     public ResponseEntity<byte[]> download() throws IOException {
+        CsvSchema csvSchema;
         List<CsvData> csvDataList = new ArrayList<>();
         CsvData csvData = new CsvData(1,"寿司",120);
         csvDataList.add(csvData);
         HttpHeaders headers = new HttpHeaders();
         downloadHelper.addContentDisposition(headers, "日本語ファイル名.csv");
-        System.out.print(csvService.getCsvText(csvDataList));
-        return new ResponseEntity<>(csvService.getCsvText(csvDataList).getBytes("MS932"), headers, HttpStatus.OK);
+        System.out.print(csvService.ReadCsvText(csvDataList));
+
+        csvSchema = csvService.ReadCsvText(csvDataList);
+        return new ResponseEntity<>(csvService.WriteCsvText(csvDataList,csvSchema).getBytes("MS932"), headers, HttpStatus.OK);
     }
 
 }

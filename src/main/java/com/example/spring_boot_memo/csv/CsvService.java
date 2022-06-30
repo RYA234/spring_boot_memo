@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +29,11 @@ public class CsvService {
      */
 
 
+    @Autowired
+    CsvMapper mapper;
+
     public String getCsvText(List<CsvData> csvDataList) throws JsonProcessingException {
-        CsvMapper mapper = new CsvMapper();
+//        CsvMapper mapper = new CsvMapper();
         //文字列にダブルクオートをつける
         mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
         //ヘッダをつける
@@ -38,5 +43,15 @@ public class CsvService {
 
     }
 
+    public CsvSchema ReadCsvText(List<CsvData> csvDataList) throws JsonProcessingException {
+        //文字列にダブルクオートをつける
+        mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
+        CsvSchema schema = mapper.schemaFor(CsvData.class).withHeader();
+        return schema;
+    }
+
+    public String WriteCsvText(List<CsvData> csvDataList, CsvSchema schema) throws JsonProcessingException {
+        return mapper.writer(schema).writeValueAsString(csvDataList);
+    }
 
 }

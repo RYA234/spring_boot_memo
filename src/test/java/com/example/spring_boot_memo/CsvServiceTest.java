@@ -6,12 +6,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,23 +32,17 @@ public class CsvServiceTest
     @InjectMocks
     CsvService csvService;
 
-    @CsvFileSource(resources = "/input.csv", numLinesToSkip = 1)
-    @DisplayName("csvファイルの内容が合っているか確認(ヘッダー除く)一行だけ")
-    @ParameterizedTest(name = "{displayName} - [{index}] {arguments}")
-    void csvFileCheck2(int code,String name, int price) throws JsonProcessingException {
-        List<CsvData> csvDataList = new ArrayList<>();
-        CsvData csvData = new CsvData(1,"寿司",120);
-        csvDataList.add(csvData);
-        String actualtmp = csvService.getCsvText(csvDataList);
-        int linestart = actualtmp.indexOf("\n");
-        int lineend = actualtmp.indexOf("\n", linestart+1);
-        String actual = actualtmp.substring(linestart+1,lineend);
 
-        String expect = code + ",\"" + name +"\"," + price;
-        System.out.println(actual + "\n");
-        System.out.println(expect + "\n");
-        assertEquals(expect,actual);
-    }
-
-
+//    @Test
+//    @DisplayName("テストコード")
+//    void shouldGetCsvText() throws JsonProcessingException {
+//        List<CsvData> csvDataList = new ArrayList<>() {
+//            {
+//                add(new CsvData(2, "高級焼肉", 1200));
+//            }
+//        };
+//        String expect = "\"CODE\",\"名前\",\"値段\"\n2,\"高級焼肉\",1200\n";
+//        String actual = csvService.getCsvText(csvDataList);
+//        assertEquals(expect, actual);
+//    }
 }
