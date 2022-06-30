@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>画像追加確認</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>画像追加確認画面</title>
+
 </head>
 <body>
+<form method="post" action="/image/image_done" enctype="multipart/form-data" class="form-control" th:object="${product}">
 
+
+    <div>
+        <ul>
+            <img height="200" th:src="${file}" th:text="${file}" width="200"/>
+        </ul>
+    </div>
+    <button class="btn btn-primary" type="submit">
+        進む
+    </button>
+
+</form>
 </body>
 </html>
