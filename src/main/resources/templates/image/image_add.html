@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>画像追加画面</title>
+
+</head>
+<body>
+<form method="post" action="/image/image_check" enctype="multipart/form-data" class="form-control" th:object="${product}">
+
+    名前：
+    <input type ="text"  th:field = "*{name}"><br />
+    画像ファイル：
+    <input type ="file"  th:field = "*{file}"><br />
+
+    <button class="btn btn-primary" type="submit">
+        進む
+    </button>
+
+</form>
+</body>
+</html>
