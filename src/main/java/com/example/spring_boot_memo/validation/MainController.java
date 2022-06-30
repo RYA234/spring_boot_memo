@@ -7,24 +7,22 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.IOException;
-
 @org.springframework.stereotype.Controller
 public class MainController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String indexController(Model model, ModelStaff modelStaff) {
+    public String indexController(Model model, Staff modelStaff) {
         return "index";
     }
 
     @RequestMapping(value = "validation/main", method = RequestMethod.GET)
     public String validationController(Model model) {
-        ModelStaff modelStaff = new ModelStaff();
+        Staff modelStaff = new Staff();
         model.addAttribute("modelStaff", modelStaff);
         return "validation/main";
     }
 
     @RequestMapping(value = "validation/check", params = "OK", method = RequestMethod.POST)
-    public String validationCheckController(Model model, @Validated ModelStaff modelStaff, BindingResult bindingResult)  {
+    public String validationCheckController(Model model, @Validated Staff modelStaff, BindingResult bindingResult)  {
         System.out.println(modelStaff);
         if (bindingResult.hasErrors()) {
             model.addAttribute("modelStaff", modelStaff);
