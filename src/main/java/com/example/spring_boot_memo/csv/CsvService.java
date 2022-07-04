@@ -30,13 +30,18 @@ public class CsvService {
      * @return csv(String)
      * @throws JsonProcessingException
      */
+ 
+    private final CsvMapper mapper;
+    private   CsvSchema csvSchema;
+
+     @Autowired
+     public CsvService(CsvMapper mapper, CsvSchema csvSchema)
+     {
+        this.csvSchema = csvSchema;
+        this.mapper = mapper;
+     }
 
 
-    @Autowired
-    CsvMapper mapper;
-
-    @Autowired
-    CsvSchema csvSchema;
 
 
     public String getCsvText(List<CsvData> csvDataList) throws JsonProcessingException {
@@ -50,18 +55,15 @@ public class CsvService {
 
     }
 
-    //Csvのヘッダーを取得
+    //CsvDataからCsvファイルのヘッダー情報を取得
     public CsvSchema getCsvHeader() throws JsonProcessingException {
         //文字列にダブルクオートをつける
         // CsvDataの@Jsonpropertyの文字列をヘッダーとして書き込む
-        // mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
         csvSchema = mapper.schemaFor(CsvData.class).withHeader();
-        // System.out.print(schema.column(0).getName());
-        // System.out.print(schema.column(1).getName());
-        // System.out.print(schema.column(2).getName());
         return csvSchema;
     }
 
+    // csvファイルの内容をString型で作成します。
     // 引数のcsvDataListはデータ部分、schemaはヘッダー部分
     public String WriteCsvText(List<CsvData> csvDataList, CsvSchema csvSchema) throws JsonProcessingException {
         return mapper.writer(csvSchema).writeValueAsString(csvDataList);

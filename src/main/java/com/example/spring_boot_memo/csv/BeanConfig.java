@@ -18,9 +18,7 @@ public class BeanConfig {
     @Bean
     public CsvSchema getCsvSchema()
     {
-        return CsvSchema.builder()
-        .setUseHeader(true)
-        .setReorderColumns(true).
+        return CsvSchema.builder().
         build();
     }
 }

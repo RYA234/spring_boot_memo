@@ -16,7 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.boot.test.context.SpringBootTest;
+import static org.mockito.BDDMockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,81 +25,45 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class CsvServiceTest
 {
-
-    @Mock
+    @Autowired
     CsvMapper mapper;
-
-     @Mock
+    @Autowired
     CsvSchema csvSchema;
-
-  
-
-   @InjectMocks
-    CsvService csvService;
-
-    // @JsonPropertyOrder()
-    // CsvData csvData;
-//     @Autowired
-//     CsvSchema testSchema;
-
-
-
-    @Test
-    @DisplayName("1.getCsvHeaderでヘッダー内容の確認")
-    void getCsvHeaderTest() throws JsonProcessingException
-    {
-     // CsvSchema testSchema = csvService.getCsvHeader();
-     // mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
-     CsvMapper mapper = new CsvMapper();
-     CsvSchema testSchema = mapper.schemaFor(CsvData.class).withHeader();
-        String expect1 = "CODE";
-           String expect2 = "名前";
-           String expect3 = "値段";
-
-           String actual1 = testSchema.column(0).getName();
-           String actual2 = testSchema.column(1).getName();
-           String actual3 = testSchema.column(2).getName();
-           assertEquals(expect1,actual1);
-           assertEquals(expect2,actual2);
-           assertEquals(expect3,actual3);
-       }
+    @Autowired
+    CsvService csvService;  
 
        @Test
-       @DisplayName("ヘッダーと内容を確認")
-       void getWriteCsvTextTest() throws JsonProcessingException
+       @DisplayName("ヘッダーと内容をテスト")
+       void getCsvHeaderTest() throws JsonProcessingException
        {
-          List<CsvData> csvDataList = new ArrayList<>() {
-              {
-                  add(new CsvData(2, "高級焼肉", 1200));
-              }
-          };
-          CsvMapper mapper = new CsvMapper();
-          CsvSchema schema = mapper.schemaFor(CsvData.class).withHeader();
-          String actual = mapper.writer(schema).writeValueAsString(csvDataList);
-         // String actual = csvService.WriteCsvText(csvDataList, schema);
-          String expect = "CODE,名前,値段\n2,高級焼肉,1200\n";
-          assertEquals(expect, actual);
+            CsvSchema testSchema = csvService.getCsvHeader();
+            String expect1 = "CODE";
+            String expect2 = "名前";
+            String expect3 = "値段";
 
-       }
+            String actual1 = testSchema.column(0).getName();
+            String actual2 = testSchema.column(1).getName();
+            String actual3 = testSchema.column(2).getName();
+
+            assertEquals(expect1,actual1);
+            assertEquals(expect2,actual2);
+            assertEquals(expect3,actual3);
+        }
 
        @Test
-       @DisplayName("ヘッダーと内容を確認Autowired_NGになる。")
-       void getWriteCsvTextTestAutowired() throws JsonProcessingException
+       @DisplayName("ヘッダー内容確認")
+       void getCsvHeadersTest() throws JsonProcessingException
        {
-        CsvSchema testSchema = csvService.getCsvHeader();
+            List<CsvData> csvDataList = new ArrayList<>() {
+                {
+                    add(new CsvData(2, "高級焼肉", 1200));
+                }
+                }; 
+            String actual =csvService.WriteCsvText(csvDataList, csvService.getCsvHeader());
+            String expect = "CODE,名前,値段\n2,高級焼肉,1200\n";
+            assertEquals(expect, actual);
        }
-//    @Test
-//    @DisplayName("テストコード")
-//    void shouldGetCsvText() throws JsonProcessingException {
-//        List<CsvData> csvDataList = new ArrayList<>() {
-//            {
-//                add(new CsvData(2, "高級焼肉", 1200));
-//            }
-//        };
-//        String expect = "\"CODE\",\"名前\",\"値段\"\n2,\"高級焼肉\",1200\n";
-//        String actual = csvService.getCsvText(csvDataList);
-//        assertEquals(expect, actual);
-//    }
 }
