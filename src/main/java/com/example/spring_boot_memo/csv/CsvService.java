@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.validation.Schema;
+
 import com.example.spring_boot_memo.csv.CsvData;
 @Service
 public class CsvService {
@@ -32,10 +35,14 @@ public class CsvService {
     @Autowired
     CsvMapper mapper;
 
+    @Autowired
+    CsvSchema csvSchema;
+
+
     public String getCsvText(List<CsvData> csvDataList) throws JsonProcessingException {
 //        CsvMapper mapper = new CsvMapper();
         //文字列にダブルクオートをつける
-        mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
+       // mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
         //ヘッダをつける
         CsvSchema schema = mapper.schemaFor(CsvData.class).withHeader();
         //本来はDBからデータを取得する。
@@ -47,17 +54,17 @@ public class CsvService {
     public CsvSchema getCsvHeader() throws JsonProcessingException {
         //文字列にダブルクオートをつける
         // CsvDataの@Jsonpropertyの文字列をヘッダーとして書き込む
-        mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
-        CsvSchema schema = mapper.schemaFor(CsvData.class).withHeader();
+        // mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
+        csvSchema = mapper.schemaFor(CsvData.class).withHeader();
         // System.out.print(schema.column(0).getName());
         // System.out.print(schema.column(1).getName());
         // System.out.print(schema.column(2).getName());
-        return schema;
+        return csvSchema;
     }
 
     // 引数のcsvDataListはデータ部分、schemaはヘッダー部分
-    public String WriteCsvText(List<CsvData> csvDataList, CsvSchema schema) throws JsonProcessingException {
-        return mapper.writer(schema).writeValueAsString(csvDataList);
+    public String WriteCsvText(List<CsvData> csvDataList, CsvSchema csvSchema) throws JsonProcessingException {
+        return mapper.writer(csvSchema).writeValueAsString(csvDataList);
     }
 
 }

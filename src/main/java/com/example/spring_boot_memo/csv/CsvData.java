@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @JsonPropertyOrder({"CODE", "名前","値段"})
-public class CsvData {
+public  class CsvData {
     @JsonProperty("CODE")
     int code;
     @JsonProperty("名前")
