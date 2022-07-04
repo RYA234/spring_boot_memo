@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.csv.Csv;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,14 +25,42 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 public class CsvServiceTest
 {
-    @Mock
-    CsvMapper mapper;
+
+
 
     @Mock
     CsvSchema schema;
+
+    @Mock
+     CsvMapper mapper;
+
     @InjectMocks
     CsvService csvService;
 
+//     @Autowired
+//     CsvSchema testSchema;
+
+    @Test
+    @DisplayName("1.getCsvHeaderでヘッダー内容の確認")
+    void getCsvHeaderTest() throws JsonProcessingException
+    {
+       CsvSchema testSchema = csvService.getCsvHeader();
+        
+        String expect1 = "\"CODE\"";
+        //    String expect2 = "\"名前\"";
+        //    String expect3 = "\"値段\"";
+
+        //    String actual1 = testSchema.column(0).getName();
+        //    String actual2 = testSchema.column(1).getName();
+        //    String actual3 = testSchema.column(2).getName();
+
+        //    assertEquals(expect1,actual1);
+        //    assertEquals(expect2,actual2);
+        //    assertEquals(expect3,actual3);
+
+
+
+        }
 
 //    @Test
 //    @DisplayName("テストコード")

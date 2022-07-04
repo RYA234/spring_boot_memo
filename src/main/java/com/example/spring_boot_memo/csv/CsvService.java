@@ -43,13 +43,19 @@ public class CsvService {
 
     }
 
-    public CsvSchema ReadCsvText(List<CsvData> csvDataList) throws JsonProcessingException {
+    //Csvのヘッダーを取得
+    public CsvSchema getCsvHeader() throws JsonProcessingException {
         //文字列にダブルクオートをつける
+        // CsvDataの@Jsonpropertyの文字列をヘッダーとして書き込む
         mapper.configure(CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS, true);
         CsvSchema schema = mapper.schemaFor(CsvData.class).withHeader();
+        // System.out.print(schema.column(0).getName());
+        // System.out.print(schema.column(1).getName());
+        // System.out.print(schema.column(2).getName());
         return schema;
     }
 
+    // 引数のcsvDataListはデータ部分、schemaはヘッダー部分
     public String WriteCsvText(List<CsvData> csvDataList, CsvSchema schema) throws JsonProcessingException {
         return mapper.writer(schema).writeValueAsString(csvDataList);
     }

@@ -15,9 +15,7 @@ import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
-
-
-
+    
     @Autowired
     CsvService csvService;
 
@@ -37,9 +35,9 @@ public class Controller {
         csvDataList.add(csvData);
         HttpHeaders headers = new HttpHeaders();
         downloadHelper.addContentDisposition(headers, "日本語ファイル名.csv");
-        System.out.print(csvService.ReadCsvText(csvDataList));
+        System.out.print(csvService.getCsvHeader());
 
-        csvSchema = csvService.ReadCsvText(csvDataList);
+        csvSchema = csvService.getCsvHeader();
         return new ResponseEntity<>(csvService.WriteCsvText(csvDataList,csvSchema).getBytes("MS932"), headers, HttpStatus.OK);
     }
 
