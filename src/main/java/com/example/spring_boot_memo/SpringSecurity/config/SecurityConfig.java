@@ -31,16 +31,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/check/access").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated();  // 上記以外のviewはログイン前にはみれなくなる。
         // ログイン処理
         http
                 .formLogin()
                 .loginProcessingUrl("/login")
-                .loginPage("/login")
-                .failureUrl("/login?error")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/check/not_access", true);
+                .loginPage("/login")                        
+                .failureUrl("/login?error") //エラー画面
+                .usernameParameter("username")  //login.html のusernameに相当
+                .passwordParameter("password")   //login.html のpasswordに相当
+                .defaultSuccessUrl("/check/not_access", true);  // /@GetMapping("/check/not_access")のコントローラーを作る必要あり。
         http.csrf().disable();
     }
     @Override
