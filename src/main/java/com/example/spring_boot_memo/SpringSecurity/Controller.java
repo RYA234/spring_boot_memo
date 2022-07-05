@@ -24,4 +24,11 @@ public class Controller {
     {
         return "check/OK";
     }
+
+    // SecurityConfigで/logout→/check/not_accessに遷移する
+    @GetMapping("/check/not_access")
+    public String getNotAccess()
+    {
+        return "check/not_access";
+    }
 }
