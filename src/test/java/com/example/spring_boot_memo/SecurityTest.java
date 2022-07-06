@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -42,20 +43,26 @@ public class SecurityTest {
 
     @Test
     @WithMockUser
-    @DisplayName("ログイン後に認証できるか確認")
+    @DisplayName("ログイン成功後に不許可されていたページにアクセスできるか確認")
     public void whenGetCustomers_thenStatus200() throws Exception {
-        mvc.perform(get("/check/OK"))
+        mvc.perform(get("/check/OK"))   // ログイン前
                 .andExpect(status().isOk());
 
         mvc.perform(get("/login"))
                 .andExpect(status().isOk());
+        mvc.perform(get("/check/not_access"))
+        .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser
-    @DisplayName("ログアウトができるか確認")
+    @DisplayName("認証後にログアウトのエンドポイントへリクエストすると、/logoutへリダイレクトする")
     public void Logout() throws Exception {
-        mvc.perform(logout());
+       MvcResult result = mvc.perform(logout()).andReturn();
+       String actual = result.getRequest().getRequestURI();
+       String expected = "/logout";
+       assertEquals(expected, actual);
+       System.out.println(result);
     }
 
     @Test
@@ -74,7 +81,7 @@ public class SecurityTest {
     @WithMockUser
     @DisplayName("パスワードがBcryptCheckされているか確認")
     public void passwordBCryptCheck(){
-         String  unexpected = "PASS"; 
+        String  unexpected = "PASS"; 
         PasswordEncoder bcrypt = new BCryptPasswordEncoder();
         String actual = bcrypt.encode(unexpected);
         assertNotEquals(unexpected, actual);
