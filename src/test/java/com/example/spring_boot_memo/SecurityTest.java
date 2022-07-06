@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBeans;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +23,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.context.WebApplicationContext;
+import org.thymeleaf.model.IStandaloneElementTag;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -31,6 +34,12 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import javax.xml.bind.DatatypeConverter;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -79,12 +88,12 @@ public class SecurityTest {
 
     @Test
     @WithMockUser
-    @DisplayName("パスワードがBcryptCheckされているか確認")
-    public void passwordBCryptCheck(){
+    @DisplayName("比較-エンコード後の生のパスワードがストレージからのエンコードされたパスワード）")
+    public void passwordBCryptMatchCheck() throws NoSuchAlgorithmException{
         String  unexpected = "PASS"; 
-        PasswordEncoder bcrypt = new BCryptPasswordEncoder();
-        String actual = bcrypt.encode(unexpected);
-        assertNotEquals(unexpected, actual);
-
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String actual = passwordEncoder.encode(unexpected);
+        Boolean isActual = passwordEncoder.matches(unexpected,actual);
+        assertEquals(true, isActual);
     }
 }
