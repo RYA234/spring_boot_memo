@@ -31,4 +31,10 @@ public class Controller {
     {
         return "check/not_access";
     }
+    
+    @GetMapping("/menu/menu")
+    public String getmenu()
+    {
+        return "menu/menu";
+    }
 }
