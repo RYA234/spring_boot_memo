@@ -1,5 +1,6 @@
 package com.example.spring_boot_memo.SpringSecurity.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,8 +18,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
+    @Autowired
+    public PasswordEncoder passwordEncoder;
 
 
     /** セキュリティの各種設定 */
@@ -40,16 +41,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error") //エラー画面
                 .usernameParameter("username")  //login.html のusernameに相当
                 .passwordParameter("password")   //login.html のpasswordに相当
-                .defaultSuccessUrl("/check/not_access", true);  // /@GetMapping("/check/not_access")のコントローラーを作る必要あり。
+                .defaultSuccessUrl("/menu/menu", true);  // /@GetMapping("/menu/menu")のコントローラーを作る必要あり。
         http.csrf().disable();
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        PasswordEncoder encoder = passwordEncoder();
+        // PasswordEncoder encoder = passwordEncoder();
         auth
                 .inMemoryAuthentication()
                 .withUser("User") // userを追加
-                .password(encoder.encode("PASS"))
+                .password(passwordEncoder.encode("PASS"))
                 .roles("GENERAL");
     }
 
