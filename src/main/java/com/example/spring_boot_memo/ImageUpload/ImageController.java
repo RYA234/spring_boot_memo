@@ -48,7 +48,7 @@ public class ImageController {
     }
 
     @RequestMapping(value = "image/image_check", method = RequestMethod.POST)
-    public String checkImageController(Model model, Product product) throws IOException {
+    public String checkImageController(Model model,Product product) throws IOException {
 
          String newPath = uploadService.imageAddTmp(product);
 
@@ -62,8 +62,10 @@ public class ImageController {
         product.setFilePath(newPath);
         model.addAttribute(product);
         product.setFilePath(newPath);
-        String uploadURL = "http:\\\\localhost:5000\\files\\" + newPath;
+        String uploadURL = "http://localhost:5000/files/" + newPath;
         model.addAttribute("file", uploadURL);
+        product.setFilePath(newPath);
+//        product.setName();
 
         return "image/image_check";
     }
@@ -76,7 +78,7 @@ public class ImageController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
     @RequestMapping(value = "image/image_done", method = RequestMethod.POST)
-    public String doneImageController(Model model,Product product) throws IOException {
+    public String doneImageController(Model model,@ModelAttribute  Product product) throws IOException {
 
         uploadService.imageAddDone(product.getFilePath());
 

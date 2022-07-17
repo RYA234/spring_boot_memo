@@ -8,12 +8,14 @@
 <body>
 <form method="post" action="/image/image_done" enctype="multipart/form-data" class="form-control" th:object="${product}">
 
-
+<input type =
     <div>
         <ul>
             <img height="200" th:src="${file}" th:text="${file}" width="200"/>
         </ul>
     </div>
+    <td> <input type="hidden" th:field="*{name}"></td>
+    <td> <input type="hidden" th:field="*{filePath}"></td>
     <button class="btn btn-primary" type="submit">
         進む
     </button>

@@ -28,16 +28,15 @@ public class UploadService {
         Path oldPath = Paths.get("upload-dir/"+product.getFile().getResource().getFilename());
         File oldFile = new File(goal.toString());
         Files.move(oldPath,oldPath.resolveSibling(newPath));
-
         return newPath;
     }
 
-    public void imageAddDone(String imagePath) throws IOException {
+    public String imageAddDone(String imagePath) throws IOException {
         Random random = new Random();
         String newPath = String.valueOf(random.nextInt(10000000)) +".png";
         Path oldPath = Paths.get("upload-dir",imagePath);
         Files.move (oldPath,oldPath.resolveSibling(newPath));
-
+        return newPath;
     }
 
 
