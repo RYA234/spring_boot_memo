@@ -49,24 +49,13 @@ public class ImageController {
 
     @RequestMapping(value = "image/image_check", method = RequestMethod.POST)
     public String checkImageController(Model model,Product product) throws IOException {
-
-         String newPath = uploadService.imageAddTmp(product);
-
-//        Random random = new Random();
-//        Path goal = storageService.load(product.getFile().getResource().getFilename());
-//        storageService.store(product.getFile());
-//        String newPath = "tmp" + String.valueOf(random.nextInt(10000)) +".png";
-//        Path oldPath = Paths.get("upload-dir/"+product.getFile().getResource().getFilename());
-//        File oldFile = new File(goal.toString());
-//        Files.move(oldPath,oldPath.resolveSibling(newPath));
+        String newPath = uploadService.imageAddTmp(product);
         product.setFilePath(newPath);
         model.addAttribute(product);
         product.setFilePath(newPath);
         String uploadURL = "http://localhost:5000/files/" + newPath;
         model.addAttribute("file", uploadURL);
         product.setFilePath(newPath);
-//        product.setName();
-
         return "image/image_check";
     }
 
@@ -80,7 +69,11 @@ public class ImageController {
     @RequestMapping(value = "image/image_done", method = RequestMethod.POST)
     public String doneImageController(Model model,@ModelAttribute  Product product) throws IOException {
 
-        uploadService.imageAddDone(product.getFilePath());
+        String newPath = uploadService.imageAddDone(product.getFilePath());
+
+        String uploadURL = "http://localhost:5000/files/" + newPath;
+        model.addAttribute("file",uploadURL);
+        model.addAttribute(product);
 
         return "image/image_done";
     }

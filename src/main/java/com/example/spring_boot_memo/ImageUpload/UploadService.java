@@ -20,17 +20,20 @@ public class UploadService {
         this.storageService = storageService;
     }
 
+    //画像ファイルを一時保存する
     public String imageAddTmp(Product product) throws IOException {
         Random random = new Random();
         Path goal = storageService.load(product.getFile().getResource().getFilename());
         storageService.store(product.getFile());
         String newPath = "tmp" + String.valueOf(random.nextInt(10000)) +".png";
+
         Path oldPath = Paths.get("upload-dir/"+product.getFile().getResource().getFilename());
         File oldFile = new File(goal.toString());
         Files.move(oldPath,oldPath.resolveSibling(newPath));
         return newPath;
     }
 
+    //一時保存したファイルをリネームして
     public String imageAddDone(String imagePath) throws IOException {
         Random random = new Random();
         String newPath = String.valueOf(random.nextInt(10000000)) +".png";
