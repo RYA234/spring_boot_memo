@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Validation</title>
+
+</head>
+<body>
+バリデーション
+<form method="post" action="/validation/check" th:object="${modelStaff}">
+    <input type="number" th:field="*{id}" th:errorclass="is-invalid">
+    <p class="invalid-feedback" th:errors="*{id}">Id Error</p>
+    <br>
+    <input type="text" th:field="*{name}" th:errorclass="is-invalid">
+    <p class="invalid-feedback" th:errors="*{name}">Name Error</p>
+    <br>
+    <button type="submit" name="OK">
+        バリデーションチェック
+    </button>
+</form>
+</body>
+</html>
